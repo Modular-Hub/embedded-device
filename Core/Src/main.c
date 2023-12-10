@@ -33,6 +33,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+uint16_t raw;
+uint8_t button;
+char msg[10];
 
 /* USER CODE END PD */
 
@@ -80,9 +83,6 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	uint16_t raw;
-	char msg[10];
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -118,16 +118,21 @@ int main(void)
   {
     // Test: toggle led
     HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
+    button = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
 
     // Get ADC value
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-    raw = HAL_ADC_GetValue(&hadc1);
+    if(button == 1){
+    for(uint8_t i=0; i<100; i++){
+      HAL_ADC_Start(&hadc1);
+      HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+      raw = HAL_ADC_GetValue(&hadc1);
 
-    // Convert to string and print
-    sprintf(msg, "%hu\r\n", raw);
-    HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-
+      // Convert to string and print
+      sprintf(msg, "%hu,", raw);
+      HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+    }
+    }
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
