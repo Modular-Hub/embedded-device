@@ -41,7 +41,6 @@
 /* USER CODE BEGIN PD */
 uint16_t raw;
 char msg[10];
-#define SECOND 2500
 
 /* USER CODE END PD */
 
@@ -110,7 +109,7 @@ int main(void)
     if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 1){
       HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
 
-      for(int i=0; i<SECOND * 10; i++){
+      for(int i=0; i<3; i++){
     	// Get ADC value
         HAL_ADC_Start(&hadc1);
         HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
