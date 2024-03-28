@@ -231,7 +231,7 @@ void Error_Handler(void);
 #define NBL1_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
-#define SECOND 9000
+#define SECOND 2222
 
 /* USER CODE END Private defines */
 

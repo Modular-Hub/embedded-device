@@ -108,8 +108,11 @@ int main(void)
   {
     if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == 1){
       HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
-
-      for(int i=0; i<3; i++){
+      
+      /* Code for infinite reading loop */
+      // do{
+      //   HAL_Delay(100);
+      for(int i=0; i<3*SECOND; i++){
     	// Get ADC value
         HAL_ADC_Start(&hadc1);
         HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
@@ -118,7 +121,7 @@ int main(void)
         // Convert to string and print
         sprintf(msg, "%hu,", raw);
         HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-      }
+      } // while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) != 1)
     // End line and reset pointer
     HAL_UART_Transmit(&huart1, (uint8_t*)"\n\r", 2, HAL_MAX_DELAY);
 
